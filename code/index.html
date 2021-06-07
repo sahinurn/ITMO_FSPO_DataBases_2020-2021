@@ -109,52 +109,67 @@
 <h2 id="_1">Код создания БД</h2>
 <pre><code>CREATE DATABASE newspaper;
 
+USE newspaper;
+
 CREATE TABLE typography (
-    id int PRIMARY KEY, 
-    name VARCHAR(20) NOT NULL, 
-    status VARCHAR(10) NOT NULL, 
-    adress VARCHAR(20) NOT NULL
+  id INT NOT NULL AUTO_INCREMENT,
+  name VARCHAR(45) NOT NULL,
+  status VARCHAR(45) NOT NULL,
+  address VARCHAR(45) NOT NULL,
+  PRIMARY KEY (id)
 );
 
 CREATE TABLE pochta (
-    id int PRIMARY KEY, 
-    number integer NOT NULL, 
-    adress VARCHAR(20) NOT NULL
+  id INT NOT NULL AUTO_INCREMENT,
+  number INT NOT NULL,
+  address VARCHAR(45) NOT NULL,
+  PRIMARY KEY (id)
 );
 
 CREATE TABLE newspaper (
-    id int PRIMARY KEY, 
-    price float NOT NULL,
-    title varhcar(20) NOT NULL, 
-    index integer NOT NULL, 
-    editor VARCHAR(30) NOT NULL, 
-    author_name VARCHAR(20) NOT NULL
+  id INT NOT NULL AUTO_INCREMENT,
+  price FLOAT NOT NULL,
+  title VARCHAR(45) NOT NULL,
+  t_index INT NOT NULL,
+  editor VARCHAR(45) NOT NULL,
+  author_name VARCHAR(45) NOT NULL,
+  PRIMARY KEY (id)
 );
 
-
 CREATE TABLE tirazh (
-    id int PRIMARY KEY,
-    id_newspaper int references newspaper(id),
-    count int NOT NULL
+  id INT NOT NULL AUTO_INCREMENT,
+  count INT NOT NULL,
+  id_newspaper INT NOT NULL,
+  PRIMARY KEY (id),
+    FOREIGN KEY (id_newspaper)
+    REFERENCES newspaper(id)
 );
 
 CREATE TABLE proizvodstvo (
-    id int PRIMARY KEY, 
-    id_newspaper int references newspaper(id),
-    id_tirazh int references tirazh(id),
-    id_typography int references typography(id),
-    pechat date NOT NULL,
-    count int NOT NULL
+  id INT NOT NULL AUTO_INCREMENT,
+  pechat DATE NOT NULL,
+  count INT NOT NULL,
+  id_tirazha INT NOT NULL,
+  id_typography INT NOT NULL,
+  PRIMARY KEY (id),
+    FOREIGN KEY (id_tirazha)
+    REFERENCES tirazh (id),
+    FOREIGN KEY (id_typography)
+    REFERENCES typography (id)
 );
 
 CREATE TABLE storage (
-    id int PRIMARY KEY, 
-    id_pochti int references pochta(id),
-    id_tirazh int references tirazh(id),
-    id_newspaper int references newspaper(id),
-    id_typography int references typography(id),
-    count int NOT NULL
+  id INT NOT NULL AUTO_INCREMENT,
+  count INT NOT NULL,
+  pochta_id INT NOT NULL,
+  proizvodstvo_id INT NOT NULL,
+  PRIMARY KEY (id),
+    FOREIGN KEY (pochta_id)
+    REFERENCES pochta (id),
+    FOREIGN KEY (proizvodstvo_id)
+    REFERENCES proizvodstvo (id)
 );
+
 </code></pre></div>
             </div>
         </div>
